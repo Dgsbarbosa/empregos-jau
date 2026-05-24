@@ -96,7 +96,7 @@ export default async function Home() {
               <div className="w-full h-px bg-slate-200" />
             </div>
 
-            {Object.entries(vagasAgrupadasPorData).slice(0,2).map(([data, listaDeVagas]) => (
+            {Object.entries(vagasAgrupadasPorData).map(([data, listaDeVagas]) => (
               <div key={data} className="space-y-4">
                 {/* Subtítulo com o Dia */}
                 <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wide">
