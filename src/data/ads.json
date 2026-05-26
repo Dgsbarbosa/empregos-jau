@@ -1,0 +1,28 @@
+{
+  "top": [
+    {
+      "id": 1,
+      "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779753558/job_website/Banner%20600%20x%2090/Banner_600_x_90_aiasmh.png",
+      "link": "/anunciar",
+      "alt": "Banner Top 1"
+    }
+  ],
+
+  "middle": [
+    {
+      "id": 3,
+      "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779753523/job_website/Banner%20600%20x%20192/Banner_600_x_192_pb21sf.png",
+      "link": "/anunciar",
+      "alt": "Banner Middle 1"
+    }
+  ],
+
+  "footer": [
+    {
+      "id": 4,
+      "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779753523/job_website/Banner%20600%20x%20192/Banner_600_x_192_pb21sf.png",
+      "link": "/anunciar",
+      "alt": "Banner Footer 1"
+    }
+  ]
+}

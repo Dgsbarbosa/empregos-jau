@@ -1,38 +1,120 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const banners = [
-  "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779647950/job_website/banners/6_u99wvm_pvn3mf.png",
-  "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779647943/job_website/banners/5_dbr1qo_zibt0q.png",
-  "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779647941/job_website/banners/4_t0f6cb_empcya.png"
-];
+import Link from "next/link";
 
-export default function BannerCarousel() {
+import banners from "@/data/caroussel.json";
 
-  const [index, setIndex] = useState(0);
+export default function BannerLocal() {
 
+  const [current, setCurrent] = useState(0);
+
+  const frameRef = useRef();
+
+  const lastTimeRef = useRef(0);
+
+  // AUTO PLAY
   useEffect(() => {
 
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % banners.length);
-    }, 4000);
+    if (!banners.length) return;
 
-    return () => clearInterval(interval);
+    let mounted = true;
+
+    const animate = (time) => {
+
+      if (!mounted) return;
+
+      if (!lastTimeRef.current) {
+        lastTimeRef.current = time;
+      }
+
+      const delta = time - lastTimeRef.current;
+
+      if (delta >= 4000) {
+
+        setCurrent((prev) =>
+          prev >= banners.length - 1
+            ? 0
+            : prev + 1
+        );
+
+        lastTimeRef.current = time;
+      }
+
+      frameRef.current =
+        requestAnimationFrame(animate);
+    };
+
+    frameRef.current =
+      requestAnimationFrame(animate);
+
+    return () => {
+
+      mounted = false;
+
+      cancelAnimationFrame(frameRef.current);
+
+    };
 
   }, []);
 
+  // SEM BANNERS
+  if (!banners.length) {
+
+    return (
+      <div className="w-full h-40 bg-zinc-200 rounded-3xl" />
+    );
+
+  }
+
   return (
+    <div className="relative w-full overflow-hidden shadow-xl  aspect-16/5 sm:aspect-16/4 md:aspect-[16/3.8] mb-5">
 
-    <div className="w-full relative overflow-hidden rounded-3xl shadow-xl">
+      {banners.map((banner, index) => (
 
-      <img
-        src={banners[index]}
-        alt="Banner"
-        className="w-full h-auto object-cover transition-all duration-500"
-      />
+        <Link
+          key={index}
+          href={banner.link}
+          className={`absolute inset-0 transition-opacity duration-700 ${
+            current === index
+              ? "opacity-100 z-10"
+              : "opacity-0 z-0 pointer-events-none"
+          }`}
+        >
+
+          <img
+            src={banner.image}
+            alt={banner.alt}
+            className="w-full h-full object-cover"
+          />
+
+        </Link>
+
+      ))}
+
+      {/* OVERLAY */}
+      <div className="absolute inset-0 bg-linear-to-t from-black/10 to-transparent z-10 pointer-events-none" />
+
+      {/* DOTS */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2 bg-black/30 backdrop-blur-md px-3 py-2 rounded-full">
+
+        {banners.map((_, index) => (
+
+          <button
+            key={index}
+            onClick={() => setCurrent(index)}
+            className={`rounded-full transition-all duration-300 ${
+              current === index
+                ? "w-6 h-2 bg-white"
+                : "w-2 h-2 bg-white/50 hover:bg-white"
+            }`}
+          />
+
+        ))}
+
+      </div>
 
     </div>
-
   );
 }

@@ -5,7 +5,7 @@ export default function JobCard({ vaga }) {
       className={`block p-5 rounded-2xl border transition hover:shadow-md ${
         vaga.destaque
           ? "bg-amber-50 border-amber-300"
-          : "bg-white border-slate-200"
+          : "bg-white border-slate-400"
       }`}
     >
       <div className="flex justify-between gap-4">
@@ -23,7 +23,7 @@ export default function JobCard({ vaga }) {
           </h2>
 
           <p className="text-sm text-slate-500 mt-1">
-            {vaga.empresa} • Jaú/SP
+            {vaga.empresa} • {vaga.cidade}/{vaga.estado}
           </p>
 
           <p className="text-sm text-slate-600 mt-3 line-clamp-2">

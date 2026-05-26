@@ -1,72 +1,206 @@
 import { supabase } from "@/lib/supabase";
 import { notFound } from "next/navigation";
-import { headers } from 'next/headers'
 
 import CallAction from "./_components/CallAction";
-
-// Reaproveita a busca para evitar requisições duplicadas (Padrão Next.js 15)
+import AdsBanner from "@/components/ads/Adsense";
+// Busca da vaga
 async function getVaga(slug) {
   const { data } = await supabase
     .from("vagas")
     .select("*")
     .eq("slug", slug)
     .maybeSingle();
+
   return data;
 }
 
-export async function generateMetadata({ params }, parent) {
+// SEO Metadata
+export async function generateMetadata({ params }) {
   const resolvedParams = await params;
+
   const vaga = await getVaga(resolvedParams.slug);
 
   if (!vaga) {
     return {
-      title: "Vaga não encontrada",
-      description: "Essa vaga não está mais disponível ou não existe.",
+      title: "Vaga não encontrada | Empregos Jaú",
+      description: "Essa vaga não está mais disponível.",
     };
   }
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    "https://empregosjau.com.br";
 
-  // Define o domínio base (mude para o seu domínio de produção)
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://empregosjau.com.br';
+  const cidade = vaga.cidade || "Jaú";
+  const estado = vaga.estado || "SP";
 
   return {
-    title: `${vaga.titulo} em ${vaga.cidade}/${vaga.estado} | Empregos Jaú`,
-    description: vaga.descricao.slice(0, 160),
-    // O Next.js usa o objeto 'alternates' para definir a tag <link rel="canonical">
+    title: `${vaga.titulo} em ${cidade}/${estado} | Empregos Jaú`,
+
+    description:
+      vaga.descricao?.slice(0, 160) ||
+      `Confira a vaga de ${vaga.titulo} em ${cidade}/${estado}.`,
+
     alternates: {
       canonical: `${baseUrl}/vagas/${resolvedParams.slug}`,
     },
-    // Se precisar da URL especificamente para as tags Open Graph (Facebook/LinkedIn)
+
     openGraph: {
+      title: `${vaga.titulo} | Empregos Jaú`,
+      description: vaga.descricao?.slice(0, 160),
       url: `${baseUrl}/vagas/${resolvedParams.slug}`,
-    }
+      siteName: "Empregos Jaú",
+      locale: "pt_BR",
+      type: "website",
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title: `${vaga.titulo} | Empregos Jaú`,
+      description: vaga.descricao?.slice(0, 160),
+    },
   };
 }
 
-
 export default async function VagaPage({ params }) {
   const resolvedParams = await params;
+
   const vaga = await getVaga(resolvedParams.slug);
+  const isDestaque = vaga.destaque;
 
   if (!vaga) {
     notFound();
   }
 
-  // Identifica automaticamente se o contato é Link/WhatsApp ou E-mail para colocar o prefixo correto
-  const dynamicHref = vaga.contato.includes("@")
-    ? `mailto:${vaga.contato}`
-    : vaga.contato.startsWith("http")
-      ? vaga.contato
-      : `https://wa.me{vaga.contato.replace(/\D/g, "")}`;
+  const cidade = vaga.cidade || "Jaú";
+  const estado = vaga.estado || "SP";
 
-  const dataPublicacao = new Date(vaga.created_at).toLocaleDateString("pt-BR", {
+  const dataPublicacao = new Date(
+    vaga.created_at
+  ).toLocaleDateString("pt-BR", {
     day: "numeric",
     month: "long",
     year: "numeric",
   });
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-8">
-      {/* Dados Estruturados para o Google Jobs SEO */}
+    <main className="min-h-screen bg-zinc-50">
+
+      <section className="max-w-4xl mx-auto px-4 ">
+
+        {/* Publicidade Topo */}
+        <AdsBanner type="top" />
+
+        {/* Card da vaga */}
+        <article
+          className={`
+            rounded-3xl overflow-hidden transition-all mt-4
+                ${isDestaque
+                          ? "bg-linear-to-b from-yellow-50 to-white border border-yellow-300 shadow-lg shadow-yellow-100"
+                          : "bg-white border border-zinc-200 shadow-sm"
+                        }
+              `}
+        >
+
+          {/* Topo */}
+          <div className="p-6 md:p-8 border-b border-zinc-100">
+            {isDestaque && (
+              <div className="mb-4">
+                <span className="inline-flex items-center gap-2 bg-linear-to-r from-yellow-400 to-yellow-600 text-white text-sm font-bold px-4 py-1.5 rounded-full shadow">
+                  👑 Vaga em Destaque
+                </span>
+              </div>
+            )}
+            <div className="flex flex-wrap items-center gap-3 mb-5">
+
+              <span className="bg-blue-50 text-blue-700 border border-blue-100 text-sm font-semibold px-4 py-1.5 rounded-full">
+                Nova oportunidade
+              </span>
+
+              <span className="text-sm text-zinc-500">
+                Publicado em {dataPublicacao}
+              </span>
+
+            </div>
+
+            <h1 className="text-3xl md:text-4xl font-black tracking-tight text-zinc-900 leading-tight">
+              {vaga.titulo}
+            </h1>
+
+            <div className="mt-5 flex flex-wrap gap-3">
+
+              <div className="bg-zinc-100 text-zinc-700 px-4 py-2 rounded-2xl text-sm font-medium">
+                {vaga.empresa}
+              </div>
+
+              <div className="bg-zinc-100 text-zinc-700 px-4 py-2 rounded-2xl text-sm font-medium">
+                {cidade} - {estado}
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* Conteúdo */}
+          <div className="p-6 md:p-8">
+
+            <div className="mb-8">
+              <h2 className="text-lg font-bold text-zinc-900 mb-4">
+                Descrição da vaga
+              </h2>
+
+              <div className="text-zinc-700 leading-8 whitespace-pre-line text-[16px]">
+                {vaga.descricao}
+              </div>
+            </div>
+
+            {/* Contato */}
+            <div className="border-t border-zinc-100 pt-6">
+
+              <h2 className="text-lg font-bold text-zinc-900 mb-4">
+                Informações para candidatura
+              </h2>
+
+              <div className="space-y-3">
+
+                <div className="bg-zinc-50 border border-zinc-200 rounded-2xl p-4">
+                  <span className="block text-sm font-semibold text-zinc-500 mb-1">
+                    Contato
+                  </span>
+
+                  <p className="text-zinc-900 font-medium break-all">
+                    {vaga.contato}
+                  </p>
+                </div>
+
+                <div className="bg-zinc-50 border border-zinc-200 rounded-2xl p-4">
+                  <span className="block text-sm font-semibold text-zinc-500 mb-1">
+                    Local da vaga
+                  </span>
+
+                  <p className="text-zinc-900 font-medium">
+                    {cidade} - {estado}
+                  </p>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </article>
+
+        {/* CTA */}
+        <div className="mt-8">
+          <CallAction />
+        </div>
+
+        <AdsBanner type="footer" />
+
+
+      </section>
+
+      {/* SEO Google Jobs */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -77,81 +211,24 @@ export default async function VagaPage({ params }) {
             description: vaga.descricao,
             datePosted: vaga.created_at,
             employmentType: "FULL_TIME",
+
             hiringOrganization: {
               "@type": "Organization",
               name: vaga.empresa,
             },
+
             jobLocation: {
               "@type": "Place",
               address: {
                 "@type": "PostalAddress",
-                addressLocality: vaga.cidade || "Jaú",
-                addressRegion: vaga.estado || "SP",
+                addressLocality: cidade,
+                addressRegion: estado,
                 addressCountry: "BR",
               },
             },
           }),
         }}
       />
-
-      {/* Bloco AdSense Superior */}
-      <div className="mb-6">
-        <div className="bg-gray-100 border border-gray-200 h-22.5 rounded-2xl flex items-center justify-center text-xs text-gray-400 tracking-wider">
-          PUBLICIDADE
-        </div>
-      </div>
-
-      {/* Card Principal da Vaga */}
-      <article className="bg-white border border-gray-200 rounded-2xl p-6 md:p-8 shadow-sm">
-
-        {/* Informações de Cabeçalho */}
-        <div className="flex flex-wrap items-center justify-between gap-2 mb-4 text-sm text-gray-600">
-          <span className="font-bold text-gray-900">
-            Mensagem do Empregos Jaú
-          </span>
-          <span className="text-gray-500">
-            Cadastrado em: {dataPublicacao} {/* ou "07/01/2025" */}
-          </span>
-        </div>
-
-        {/* Título da Vaga */}
-        <h1 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight leading-tight">
-          {vaga.titulo}
-        </h1>
-
-        {/* Divisor Visual */}
-        <div className="h-px bg-gray-200 my-6" />
-
-        {/* Corpo da Descrição */}
-        <div className="text-gray-700 space-y-4 leading-relaxed text-base whitespace-pre-line">
-          {vaga.descricao}
-        </div>
-
-        {/* Divisor Visual Inferior */}
-        <div className="h-px bg-gray-100 my-6" />
-
-        {/* Informações de Contato e Localização */}
-        <div className="space-y-2 text-base text-gray-700">
-          <div>
-            <span className="font-bold text-gray-900">Contato:</span> {vaga.contato}
-          </div>
-          <div>
-            <span className="font-bold text-gray-900">Vaga em</span> {vaga.cidade || "Jaú"} - {vaga.estado || "SP"}
-          </div>
-        </div>
-
-      </article>
-
-      <CallAction />
-
-
-
-      {/* Bloco AdSense Inferior */}
-      <div className="mt-8">
-        <div className="bg-gray-100 border border-gray-200 h-62.5 rounded-2xl flex items-center justify-center text-xs text-gray-400 tracking-wider">
-          PUBLICIDADE
-        </div>
-      </div>
     </main>
   );
 }

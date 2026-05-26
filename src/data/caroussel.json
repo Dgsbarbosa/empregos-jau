@@ -1,0 +1,22 @@
+[
+  {
+    "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779753415/job_website/banners/2_h9dhiw.png",
+    "link": "/anunciar",
+    "alt": "Banner 1"
+  },
+  {
+    "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779753415/job_website/banners/1_zbtorf.png",
+    "link": "https://novopadrao.vercel.app/",
+    "alt": "Banner 2"
+  },
+  {
+    "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779647940/job_website/banners/3_zviyoc_n2j16h.png",
+    "link": "https://aiosproject-production.up.railway.app/",
+    "alt": "Banner 3"
+  },
+  {
+    "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779647939/job_website/banners/1_a9kwwm_giljfh.png",
+    "link": "https://aiosproject-production.up.railway.app/",
+    "alt": "Banner 4"
+  }
+]

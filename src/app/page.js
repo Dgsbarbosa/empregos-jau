@@ -1,9 +1,9 @@
 import { supabase } from "@/lib/supabase";
 import JobCard from "@/components/JobCard";
-import AdsenseTop  from "@/components/AdsenseTop";
-import BannerCarousel from "@/components/BannerLocal";
+import Adsense  from "@/components/ads/Adsense";
+import AdsBanner from "@/components/ads/Adsense";
 
-export const revalidate = 600;
+
 
 // Função auxiliar para agrupar as datas amigavelmente
 function formatarGrupoData(dataString) {
@@ -49,14 +49,13 @@ export default async function Home() {
 
   return (
     <div>
-      <main className="px-4 py-6">
-        <AdsenseTop />
+      
+      <main className="px-4">
+        
+      <AdsBanner type="top" />
+       
 
-        <div className="mt-6">
-          <BannerCarousel />
-        </div>
-
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-225 mx-auto">
           <section className="mt-8">
             <h1 className="text-4xl text-black font-black tracking-tight">
               Vagas de Emprego em Jaú/SP e região
@@ -65,7 +64,7 @@ export default async function Home() {
               Divulgamos GRATUITAMENTE vagas de emprego em Jaú e região.
             </p>
             <p className="text-slate-600 mt-3">
-              Quer publicar uma vaga? Clique <a href="/anunciar" className="text-blue-600 font-bold hover:underline">aqui</a> e saiba como.
+              Quer publicar uma vaga? Clique <a href="/anunciar" className="text-blue-600 font-bold hover:underline">aqui</a> e anuncie gratuitamente.
             </p>
           </section>
 
@@ -86,6 +85,9 @@ export default async function Home() {
               </div>
             </section>
           )}
+      <div className="mt-3.5">
+        <AdsBanner type="middle" />
+      </div>
 
           {/* SEÇÃO 2: ÚLTIMAS VAGAS DIVIDIDAS POR DIA */}
           <section className="mt-12 space-y-10">
@@ -111,9 +113,17 @@ export default async function Home() {
                 </div>
               </div>
             ))}
+
+
+            <a href="/vagas" className="text-blue-800 ">Ver todas</a>
           </section>
           
         </div>
+
+      <div className="mt-3.5">
+        <AdsBanner type="footer" />
+      </div>
+      
       </main>
     </div>
   );

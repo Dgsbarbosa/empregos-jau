@@ -1,7 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import JobCard from "@/components/JobCard";
-import AdsenseTop  from "@/components/AdsenseTop";
-import BannerCarousel from "@/components/BannerLocal";
+import AdsBanner from "@/components/ads/Adsense";
 
 export const revalidate = 600;
 
@@ -49,15 +48,14 @@ export default async function Home() {
 
   return (
     <div>
-      <main className="px-4 py-6">
-        <AdsenseTop />
+      <main className="px-4 ">
 
-        <div className="mt-6">
-          <BannerCarousel />
-        </div>
 
         <div className="max-w-5xl mx-auto">
+          <AdsBanner type="top" />
+
           <section className="mt-8">
+
             <h1 className="text-4xl text-black font-black tracking-tight">
               Vagas de Emprego em Jaú/SP e região
             </h1>
@@ -71,7 +69,7 @@ export default async function Home() {
 
           {/* SEÇÃO 1: VAGAS EM DESTAQUE (Aparece apenas se houver alguma) */}
           {vagasDestaque.length > 0 && (
-            <section className="mt-12 space-y-4">
+            <section className="mt-12 mb-12 space-y-4">
               <div className="flex items-center gap-4">
                 <h2 className="text-lg font-black text-amber-600 uppercase tracking-wider whitespace-nowrap flex items-center gap-2">
                   ⭐ Vagas em Destaque
@@ -80,18 +78,27 @@ export default async function Home() {
               </div>
 
               <div className="grid grid-cols-1 gap-4">
-                {vagasDestaque.map((vaga) => (
-                  <JobCard key={vaga.id} vaga={vaga} />
+                {vagasDestaque.map((vaga, index) => (
+                  <div key={vaga.id}>
+
+                    <JobCard vaga={vaga} />
+
+                    {(index + 1) % 8 === 0 && (
+                      <AdsBanner type="middle" />
+                    )}
+
+                  </div>
                 ))}
               </div>
             </section>
           )}
+          <AdsBanner type="middle" />
 
           {/* SEÇÃO 2: ÚLTIMAS VAGAS DIVIDIDAS POR DIA */}
-          <section className="mt-12 space-y-10">
+          <section className="mt-12 mb-12 space-y-10">
             <div className="flex items-center gap-4">
               <h2 className="text-lg font-black text-slate-800 uppercase tracking-wider whitespace-nowrap">
-                Anúncios Recentes
+                Vagas Recentes
               </h2>
               <div className="w-full h-px bg-slate-200" />
             </div>
@@ -112,7 +119,11 @@ export default async function Home() {
               </div>
             ))}
           </section>
-          
+
+          <div className="text-center text-black mb-12 text-2xl"><h4>Você chegou ao fim .</h4></div>
+          <AdsBanner type="footer" />
+
+
         </div>
       </main>
     </div>
