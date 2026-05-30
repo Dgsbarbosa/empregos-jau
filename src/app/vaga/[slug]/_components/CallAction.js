@@ -12,7 +12,7 @@ export default function CallAction(){
           </p>
         </div>
         <a
-          href="https://wa.me."
+          href="https://wa.me/14996031672"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center bg-white hover:bg-blue-50 text-blue-800 font-bold px-5 py-3 rounded-xl shadow-sm transition-colors text-sm whitespace-nowrap"

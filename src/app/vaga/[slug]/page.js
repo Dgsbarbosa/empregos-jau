@@ -191,7 +191,7 @@ export default async function VagaPage({ params }) {
         </article>
 
         {/* CTA */}
-        <div className="mt-8">
+        <div className="mt-8 mb-8">
           <CallAction />
         </div>
 
