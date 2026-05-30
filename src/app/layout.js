@@ -17,9 +17,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Empregos Jaú - Vagas de Emprego em Jaú/SP",
+  metadataBase: new URL("https://jauempregos.vercel.app"),
+
+  title: "Jaú Empregos - Vagas de Emprego em Jaú/SP",
+
   description:
     "Encontre vagas de emprego atualizadas em Jaú/SP. Empresas locais publicam vagas gratuitamente.",
+
   keywords: [
     "empregos jau",
     "vagas jau",
@@ -27,17 +31,59 @@ export const metadata = {
     "emprego em jau",
     "trabalho jau",
   ],
+
+  openGraph: {
+    title: "Empregos Jaú - Vagas de Emprego em Jaú/SP",
+
+    description:
+      "Encontre vagas de emprego atualizadas em Jaú/SP. Empresas locais publicam vagas gratuitamente.",
+
+    url: "https://jauempregos.vercel.app",
+
+    siteName: "Empregos Jaú",
+
+    locale: "pt_BR",
+
+    type: "website",
+
+    images: [
+      {
+        url: "/images/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Empregos Jaú",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+
+    title: "Empregos Jaú - Vagas de Emprego em Jaú/SP",
+
+    description:
+      "Encontre vagas de emprego atualizadas em Jaú/SP. Empresas locais publicam vagas gratuitamente.",
+
+    images: ["/images/logo.png"],
+  },
+
   other: {
     "google-adsense-account": "ca-pub-8734148830861215",
   },
 };
-
 export default function RootLayout({ children }) {
   return (
     <html
       lang="pt-BR"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8734148830861215"
+          crossOrigin="anonymous"
+        ></script>
+      </head>
       <body className="min-h-full flex flex-col bg-slate-50 text-slate-900">
 
 
@@ -78,12 +124,7 @@ export default function RootLayout({ children }) {
           richColors
         />
 
-        <Script
-          async
-          strategy="afterInteractive"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8734148830861215"
-          crossOrigin="anonymous"
-        />
+     
 
 
 

@@ -28,7 +28,7 @@ export async function generateMetadata({ params }) {
   }
   const baseUrl =
     process.env.NEXT_PUBLIC_SITE_URL ||
-    "https://empregosjau.com.br";
+    "https://jauempregos.vercel.app/";
 
   const cidade = vaga.cidade || "Jaú";
   const estado = vaga.estado || "SP";
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }) {
       `Confira a vaga de ${vaga.titulo} em ${cidade}/${estado}.`,
 
     alternates: {
-      canonical: `${baseUrl}/vagas/${resolvedParams.slug}`,
+      canonical: `${baseUrl}/vaga/${resolvedParams.slug}`,
     },
 
     openGraph: {

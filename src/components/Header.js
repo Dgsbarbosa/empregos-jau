@@ -18,10 +18,10 @@ export default function Header() {
             href="/"
             className="flex items-baseline gap-1 text-2xl font-black text-blue-600 tracking-tight shrink-0"
           >
-            <span>Empregos</span>
+            <span>Jaú</span>
 
-            <span className="text-gray-900 font-light text-lg">
-              Jaú
+            <span className=" font-light text-lg">
+              EMPREGOS
             </span>
           </a>
 
