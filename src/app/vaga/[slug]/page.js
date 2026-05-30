@@ -95,9 +95,9 @@ export default async function VagaPage({ params }) {
           className={`
             rounded-3xl overflow-hidden transition-all mt-4
                 ${isDestaque
-                          ? "bg-linear-to-b from-yellow-50 to-white border border-yellow-300 shadow-lg shadow-yellow-100"
-                          : "bg-white border border-zinc-200 shadow-sm"
-                        }
+              ? "bg-linear-to-b from-yellow-50 to-white border border-yellow-300 shadow-lg shadow-yellow-100"
+              : "bg-white border border-zinc-200 shadow-sm"
+            }
               `}
         >
 
@@ -201,34 +201,73 @@ export default async function VagaPage({ params }) {
       </section>
 
       {/* SEO Google Jobs */}
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "JobPosting",
+
             title: vaga.titulo,
+
             description: vaga.descricao,
+
             datePosted: vaga.created_at,
+
+            validThrough: vaga.expira_em,
+
             employmentType: "FULL_TIME",
 
             hiringOrganization: {
               "@type": "Organization",
               name: vaga.empresa,
+
+              sameAs: "https://empregos-jau.vercel.app",
+
+              logo: "https://empregos-jau.vercel.app/logo.png",
             },
 
             jobLocation: {
               "@type": "Place",
+
               address: {
                 "@type": "PostalAddress",
+
+                streetAddress: vaga.endereco || "",
+
                 addressLocality: cidade,
+
                 addressRegion: estado,
+
+                postalCode: vaga.cep || "",
+
                 addressCountry: "BR",
+              },
+            },
+
+            applicantLocationRequirements: {
+              "@type": "Country",
+              name: "Brasil",
+            },
+
+            baseSalary: {
+              "@type": "MonetaryAmount",
+
+              currency: "BRL",
+
+              value: {
+                "@type": "QuantitativeValue",
+
+                value: vaga.salario || 0,
+
+                unitText: "MONTH",
               },
             },
           }),
         }}
       />
+
     </main>
   );
 }
