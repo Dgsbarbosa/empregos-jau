@@ -82,6 +82,12 @@ export default function RootLayout({ children }) {
           crossOrigin="anonymous"
         />
 
+        <Script 
+          async 
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8734148830861215"
+          crossorigin="anonymous"
+        />
+
         <Footer />
       </body>
     </html>

@@ -2,27 +2,64 @@
   "top": [
     {
       "id": 1,
+      "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1780171698/job_website/Banner%20TOP%20600%20x%2090/2_hfpv3o.png",
+      "link": "https://aiosproject-production.up.railway.app/product/455/camisa-brasil-personalizada-com-nome-100-algodao-c",
+      "alt": "Banner Top 3"
+    },
+    {
+      "id": 2,
       "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779753558/job_website/Banner%20600%20x%2090/Banner_600_x_90_aiasmh.png",
       "link": "/anunciar",
       "alt": "Banner Top 1"
+    },
+    {
+      "id": 3,
+      "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1780171698/job_website/Banner%20TOP%20600%20x%2090/3_mgjqrz.png",
+      "link": "https://aiosproject-production.up.railway.app/catalog/category?category=roupas-calcados-e-acessorios",
+      "alt": "Banner Top 2"
     }
+    
   ],
 
   "middle": [
     {
-      "id": 3,
-      "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779753523/job_website/Banner%20600%20x%20192/Banner_600_x_192_pb21sf.png",
+      "id": 4,
+      "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779753558/job_website/Banner%20600%20x%2090/Banner_600_x_90_aiasmh.png",
       "link": "/anunciar",
       "alt": "Banner Middle 1"
+    },
+    {
+      "id": 5,
+      "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779753523/job_website/Banner%20600%20x%20192/Banner_600_x_192_pb21sf.png",
+      "link": "/anunciar",
+      "alt": "Banner Middle 2"
+    },
+    {
+      "id": 6,
+      "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779753523/job_website/Banner%20600%20x%20192/Banner_600_x_192_pb21sf.png",
+      "link": "/anunciar",
+      "alt": "Banner Middle 3"
     }
   ],
 
   "footer": [
     {
-      "id": 4,
+      "id": 7,
       "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779753523/job_website/Banner%20600%20x%20192/Banner_600_x_192_pb21sf.png",
       "link": "/anunciar",
       "alt": "Banner Footer 1"
+    },
+    {
+      "id": 8,
+      "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779753523/job_website/Banner%20600%20x%20192/Banner_600_x_192_pb21sf.png",
+      "link": "/anunciar",
+      "alt": "Banner Footer 2"
+    },
+    {
+      "id": 9,
+      "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779753523/job_website/Banner%20600%20x%20192/Banner_600_x_192_pb21sf.png",
+      "link": "/anunciar",
+      "alt": "Banner Footer 3"
     }
   ]
 }

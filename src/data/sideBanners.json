@@ -12,22 +12,38 @@
       "image": "https://kinsta.com/pt/wp-content/uploads/sites/3/2020/06/meia-pagina-1.png",
       "link": "/anunciar",
       "alt": "Banner esquerda 2"
+    },
+    
+    {
+      "id": 3,
+      "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1780172107/job_website/Banner%20LATERAIS%20300%20x%20600/2_bjmjlh.png",
+      "link": "/anunciar",
+      "alt": "Banner esquerda 1"
     }
+
+    
   ],
 
   "right": [
-    {
-      "id": 3,
-      "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779753485/job_website/Banner%20300%20x%20600/Banner_300_x_600_v4ceqm.png",
-      "link": "/anunciar",
-      "alt": "Banner direita 1"
-    },
-
     {
       "id": 4,
       "image": "https://kinsta.com/pt/wp-content/uploads/sites/3/2020/06/meia-pagina-1.png",
       "link": "/anunciar",
       "alt": "Banner direita 2"
+    },
+    {
+      "id": 5,
+      "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1779753485/job_website/Banner%20300%20x%20600/Banner_300_x_600_v4ceqm.png",
+      "link": "/anunciar",
+      "alt": "Banner direita 1"
+    },
+    {
+      "id": 6,
+      "image": "https://res.cloudinary.com/dakbhkmmy/image/upload/v1780172106/job_website/Banner%20LATERAIS%20300%20x%20600/3_hpwzzh.png",
+      "link": "/anunciar",
+      "alt": "Banner direita 1"
     }
+
+    
   ]
 }

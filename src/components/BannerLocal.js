@@ -76,6 +76,7 @@ export default function BannerLocal() {
         <Link
           key={index}
           href={banner.link}
+          target="_blank"
           className={`absolute inset-0 transition-opacity duration-700 ${
             current === index
               ? "opacity-100 z-10"

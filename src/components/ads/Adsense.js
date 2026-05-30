@@ -35,7 +35,7 @@ if (type === "top") {
   return (
     <div className="w-full h flex justify-center" style={{ height }}>
       <a
-        href={banner.link}
+        href={banner.link} target="_blank"  
         className="w-full   overflow-hidden rounded-xl border bg-slate-100"
       >
         <img

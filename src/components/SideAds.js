@@ -69,6 +69,7 @@ useEffect(() => {
 
         <Link
           href={banners[bannerAtual].link}
+          target="_blank"
           className="group block"
         >
 
