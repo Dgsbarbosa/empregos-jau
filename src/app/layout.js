@@ -27,6 +27,9 @@ export const metadata = {
     "emprego em jau",
     "trabalho jau",
   ],
+  other: {
+    "google-adsense-account": "ca-pub-8734148830861215",
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -78,15 +81,11 @@ export default function RootLayout({ children }) {
         <Script
           async
           strategy="afterInteractive"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXX"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8734148830861215"
           crossOrigin="anonymous"
         />
 
-        <Script 
-          async 
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8734148830861215"
-          crossorigin="anonymous"
-        />
+
 
         <Footer />
       </body>
