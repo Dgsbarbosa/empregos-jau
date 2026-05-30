@@ -83,6 +83,24 @@ export default function Header() {
                 </a>
               </li>
 
+              <li>
+                <a
+                  href="/privacidade"
+                  className="hover:text-blue-600 transition-colors"
+                >
+                  PRIVACIDADE
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="/termos"
+                  className="hover:text-blue-600 transition-colors"
+                >
+                  TERMOS
+                </a>
+              </li>
+
             </ul>
           </nav>
 
@@ -161,6 +179,20 @@ export default function Header() {
               className="block text-sm font-semibold text-gray-700 hover:text-blue-600 transition-colors"
             >
               APOIAR O PROJETO
+            </a>
+
+            <a
+              href="/privacidade"
+              className="block text-sm font-semibold text-gray-700 hover:text-blue-600 transition-colors"
+            >
+               PRIVACIDADE
+            </a>
+
+            <a
+              href="/termos"
+              className="block text-sm font-semibold text-gray-700 hover:text-blue-600 transition-colors"
+            >
+              TERMOS
             </a>
 
             <div className="pt-3">
