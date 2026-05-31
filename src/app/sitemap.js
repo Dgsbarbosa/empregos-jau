@@ -1,20 +1,24 @@
-import { supabase } from "@/lib/supabase";
-
 export default async function sitemap() {
-
-  const { data: vagas } = await supabase
+  const { data } = await supabase
     .from("vagas")
-    .select("slug");
+    .select("slug, updated_at");
 
-  const vagasUrls = vagas.map((vaga) => ({
-    url: `https://SEUDOMINIO.com/vaga/${vaga.slug}`,
-  }));
+  const vagas =
+    (data || []).map((vaga) => ({
+      url: `https://jauempregos.vercel.app/vaga/${vaga.slug}`,
+      lastModified: vaga.updated_at,
+      changeFrequency: "daily",
+      priority: 0.8,
+    }));
 
   return [
     {
-      url: "https://SEUDOMINIO.com",
+      url: "https://jauempregos.vercel.app",
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 1,
     },
 
-    ...vagasUrls,
+    ...vagas,
   ];
 }

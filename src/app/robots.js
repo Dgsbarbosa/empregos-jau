@@ -5,6 +5,6 @@ export default function robots() {
       allow: "/",
     },
 
-    sitemap: "https://SEUDOMINIO.com/sitemap.xml",
+    sitemap: "https://jauempregos.vercel.app/sitemap.xml",
   };
 }

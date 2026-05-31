@@ -3,6 +3,11 @@ import { notFound } from "next/navigation";
 
 import CallAction from "./_components/CallAction";
 import AdsBanner from "@/components/ads/Adsense";
+
+const baseUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  "https://jauempregos.vercel.app";
+
 // Busca da vaga
 async function getVaga(slug) {
   const { data } = await supabase
@@ -26,15 +31,13 @@ export async function generateMetadata({ params }) {
       description: "Essa vaga não está mais disponível.",
     };
   }
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    "https://jauempregos.vercel.app/";
+
 
   const cidade = vaga.cidade || "Jaú";
   const estado = vaga.estado || "SP";
 
   return {
-    title: `${vaga.titulo} em ${cidade}/${estado} | Empregos Jaú`,
+    title: `${vaga.titulo} - ${cidade}/${estado} | Vaga Atualizada`,
 
     description:
       vaga.descricao?.slice(0, 160) ||
@@ -47,7 +50,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: `${vaga.titulo} | Empregos Jaú`,
       description: vaga.descricao?.slice(0, 160),
-      url: `${baseUrl}/vagas/${resolvedParams.slug}`,
+      url: `${baseUrl}/vaga/${resolvedParams.slug}`,
       siteName: "Empregos Jaú",
       locale: "pt_BR",
       type: "website",
@@ -281,24 +284,29 @@ export default async function VagaPage({ params }) {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "JobPosting",
-
+            identifier: {
+              "@type": "PropertyValue",
+              name: "Empregos Jaú",
+              value: vaga.id,
+            },
             title: vaga.titulo,
 
-            description: vaga.descricao,
+            description: vaga.descricao?.replace(/\n/g, " "),
 
             datePosted: vaga.created_at,
 
             validThrough: vaga.expira_em,
-
+            dateModified: vaga.updated_at || vaga.created_at,
             employmentType: "FULL_TIME",
-
+            directApply: true,
+            url: `${baseUrl}/vaga/${resolvedParams.slug}`,
             hiringOrganization: {
               "@type": "Organization",
               name: vaga.empresa,
 
-              sameAs: "https://empregos-jau.vercel.app",
+              sameAs: "https://jauempregos.vercel.app",
 
-              logo: "https://empregos-jau.vercel.app/logo.png",
+              logo: "https://jauempregos.vercel.app/images/logo.png",
             },
 
             jobLocation: {
