@@ -6,6 +6,7 @@ import BannerCarousel from "@/components/BannerLocal";
 import { Toaster } from "sonner";
 import Script from "next/script";
 import Footer from "@/components/Footer";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
