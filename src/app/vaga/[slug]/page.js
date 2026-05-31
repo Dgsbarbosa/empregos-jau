@@ -61,19 +61,78 @@ export async function generateMetadata({ params }) {
   };
 }
 
+function formatContato(contato) {
+  if (!contato) {
+    return {
+      href: null,
+      text: "",
+    };
+  }
+
+  const value = contato.trim();
+
+  // EMAIL
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (emailRegex.test(value)) {
+    return {
+      href: `mailto:${value}`,
+      text: value,
+      label:"Envie um e-mail"
+    };
+  }
+
+  // LINK
+  const isLink =
+    value.startsWith("http://") ||
+    value.startsWith("https://") ||
+    value.startsWith("www.");
+
+  if (isLink) {
+    const cleanLink = value.replace(/\s+/g, "");
+
+    return {
+      href: cleanLink.startsWith("http")
+        ? cleanLink
+        : `https://${cleanLink}`,
+      text: cleanLink,
+      label:"Acesse a pagina da vaga"
+    };
+  }
+
+  // TELEFONE
+  const numbers = value.replace(/\D/g, "");
+
+  // se tiver pelo menos 10 números considera telefone
+  if (numbers.length >= 10) {
+    return {
+      href: `https://wa.me/55${numbers}`,
+      text: value,
+      label: value
+    };
+  }
+
+  // TEXTO COMUM
+  return {
+    href: null,
+    text: value,
+  };
+}
+
 export default async function VagaPage({ params }) {
   const resolvedParams = await params;
 
   const vaga = await getVaga(resolvedParams.slug);
-  const isDestaque = vaga.destaque;
-
   if (!vaga) {
     notFound();
   }
+  const isDestaque = vaga.destaque;
+
+
 
   const cidade = vaga.cidade || "Jaú";
   const estado = vaga.estado || "SP";
-
+  const contato = formatContato(vaga.contato);
   const dataPublicacao = new Date(
     vaga.created_at
   ).toLocaleDateString("pt-BR", {
@@ -81,6 +140,8 @@ export default async function VagaPage({ params }) {
     month: "long",
     year: "numeric",
   });
+
+
 
   return (
     <main className="min-h-screen bg-zinc-50">
@@ -128,11 +189,11 @@ export default async function VagaPage({ params }) {
 
             <div className="mt-5 flex flex-wrap gap-3">
 
-              <div className="bg-zinc-100 text-zinc-700 px-4 py-2 rounded-2xl text-sm font-medium">
+              <div className="bg-zinc-300 text-zinc-700 px-4 py-2 rounded-2xl text-sm font-medium">
                 {vaga.empresa}
               </div>
 
-              <div className="bg-zinc-100 text-zinc-700 px-4 py-2 rounded-2xl text-sm font-medium">
+              <div className="bg-zinc-300 text-zinc-700 px-4 py-2 rounded-2xl text-sm font-medium">
                 {cidade} - {estado}
               </div>
 
@@ -167,9 +228,21 @@ export default async function VagaPage({ params }) {
                     Contato
                   </span>
 
-                  <p className="text-zinc-900 font-medium break-all">
-                    {vaga.contato}
-                  </p>
+                  {contato.href ? (
+                    <a
+                      href={contato.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:underline font-medium break-all"
+                    >
+                    
+                      { contato.label }
+                    </a>
+                  ) : (
+                    <p className="text-zinc-900 font-medium break-all">
+                      {contato.text}
+                    </p>
+                  )}
                 </div>
 
                 <div className="bg-zinc-50 border border-zinc-200 rounded-2xl p-4">
