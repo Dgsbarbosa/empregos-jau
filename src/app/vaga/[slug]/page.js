@@ -54,12 +54,21 @@ export async function generateMetadata({ params }) {
       siteName: "Empregos Jaú",
       locale: "pt_BR",
       type: "website",
+      images: [
+      {
+        url: "/images/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Empregos Jaú",
+      },
+    ],
     },
 
     twitter: {
       card: "summary_large_image",
       title: `${vaga.titulo} | Empregos Jaú`,
       description: vaga.descricao?.slice(0, 160),
+      images: ["/images/logo.png"],
     },
   };
 }
