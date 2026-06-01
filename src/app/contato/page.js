@@ -30,7 +30,7 @@ export default function ContatoPage() {
           <div className="space-y-4 text-slate-700">
             <p>Email:  <a href="mailto:jau.empregos@gmail.com" className="text-blue-700 hover:underline">jau.empregos@gmail.com</a>
 </p>
-            <p>WhatsApp: (14) 99603-1672</p>
+            
             <p>Atendimento: Segunda a Sexta</p>
 
           </div>

@@ -3,40 +3,37 @@ import JobCard from "@/components/JobCard";
 import Adsense  from "@/components/ads/Adsense";
 import AdsBanner from "@/components/ads/Adsense";
 
-
-
-// Função auxiliar para agrupar as datas amigavelmente
+// Função auxiliar com fuso horário de Brasília fixo
 function formatarGrupoData(dataString) {
   const dataVaga = new Date(dataString);
   const hoje = new Date();
   const ontem = new Date();
   ontem.setDate(hoje.getDate() - 1);
 
-  const stringVaga = dataVaga.toLocaleDateString("pt-BR");
-  const stringHoje = hoje.toLocaleDateString("pt-BR");
-  const stringOntem = ontem.toLocaleDateString("pt-BR");
+  // Força o fuso horário correto para evitar problemas no servidor Node.js
+  const opcoes = { timeZone: "America/Sao_Paulo" };
+  const stringVaga = dataVaga.toLocaleDateString("pt-BR", opcoes);
+  const stringHoje = hoje.toLocaleDateString("pt-BR", opcoes);
+  const stringOntem = ontem.toLocaleDateString("pt-BR", opcoes);
 
   if (stringVaga === stringHoje) return "Hoje";
   if (stringVaga === stringOntem) return "Ontem";
 
-  return dataVaga.toLocaleDateString("pt-BR", { day: "numeric", month: "long" });
+  return dataVaga.toLocaleDateString("pt-BR", { ...opcoes, day: "numeric", month: "long" });
 }
 
 export default async function Home() {
-  // Busca todas as vagas ativas ordenadas pelas mais recentes primeiro
   const { data: todasVagas } = await supabase
     .from("vagas")
     .select("*")
     .eq("ativo", true)
     .order("created_at", { ascending: false });
 
-  // 1. Separa as vagas que são DESTAQUE
   const vagasDestaque = todasVagas?.filter(vaga => vaga.destaque) || [];
+  
+  // Pega apenas as primeiras 10 vagas normais para a Home
+  const vagasNormais = todasVagas?.filter(vaga => !vaga.destaque).slice(0, 10) || [];
 
-  // 2. Separa as vagas NORMAIS (não destaque)
-  const vagasNormais = todasVagas?.filter(vaga => !vaga.destaque) || [];
-
-  // 3. Agrupa APENAS as vagas normais por data
   const vagasAgrupadasPorData = {};
 
   vagasNormais.forEach((vaga) => {
@@ -49,11 +46,8 @@ export default async function Home() {
 
   return (
     <div>
-      
       <main className="px-4">
-        
-      <AdsBanner type="top" />
-       
+        <AdsBanner type="top" />
 
         <div className="max-w-225 mx-auto">
           <section className="mt-8">
@@ -68,7 +62,6 @@ export default async function Home() {
             </p>
           </section>
 
-          {/* SEÇÃO 1: VAGAS EM DESTAQUE (Aparece apenas se houver alguma) */}
           {vagasDestaque.length > 0 && (
             <section className="mt-12 space-y-4">
               <div className="flex items-center gap-4">
@@ -85,11 +78,11 @@ export default async function Home() {
               </div>
             </section>
           )}
-      <div className="mt-3.5">
-        <AdsBanner type="middle" />
-      </div>
 
-          {/* SEÇÃO 2: ÚLTIMAS VAGAS DIVIDIDAS POR DIA */}
+          <div className="mt-3.5">
+            <AdsBanner type="middle" />
+          </div>
+
           <section className="mt-12 space-y-10">
             <div className="flex items-center gap-4">
               <h2 className="text-lg font-black text-slate-800 uppercase tracking-wider whitespace-nowrap">
@@ -98,14 +91,12 @@ export default async function Home() {
               <div className="w-full h-px bg-slate-200" />
             </div>
 
-            {Object.entries(vagasAgrupadasPorData).slice(0,2).map(([data, listaDeVagas]) => (
+            {Object.entries(vagasAgrupadasPorData).map(([data, listaDeVagas]) => (
               <div key={data} className="space-y-4">
-                {/* Subtítulo com o Dia */}
                 <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wide">
                   {data}
                 </h3>
 
-                {/* Lista de Vagas comuns daquele dia específico */}
                 <div className="space-y-4">
                   {listaDeVagas.map((vaga) => (
                     <JobCard key={vaga.id} vaga={vaga} />
@@ -114,16 +105,13 @@ export default async function Home() {
               </div>
             ))}
 
-
-            <a href="/vagas" className="text-blue-800 ">Ver todas</a>
+            <a href="/vagas" className="text-blue-800 block mt-4">Ver todas</a>
           </section>
-          
         </div>
 
-      <div className="mt-3.5">
-        <AdsBanner type="footer" />
-      </div>
-      
+        <div className="mt-3.5">
+          <AdsBanner type="footer" />
+        </div>
       </main>
     </div>
   );
