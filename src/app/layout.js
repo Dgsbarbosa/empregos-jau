@@ -34,7 +34,9 @@ export const metadata = {
     "emprego em jau",
     "trabalho jau",
   ],
-
+  icons: {
+    icon: "/images/favicon.ico", // Next.js resolve o caminho public/images/favicon.png automaticamente
+  },
   openGraph: {
     title: "Empregos Jaú - Vagas de Emprego em Jaú/SP",
 
