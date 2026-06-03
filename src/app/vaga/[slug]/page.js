@@ -4,9 +4,10 @@ import { notFound } from "next/navigation";
 import CallAction from "./_components/CallAction";
 import AdsBanner from "@/components/ads/Adsense";
 
-const baseUrl =
+const baseUrl = (
   process.env.NEXT_PUBLIC_SITE_URL ||
-  "https://jauempregos.vercel.app";
+  "https://jauempregos.vercel.app"
+).replace(/\/$/, "");
 
 // Busca da vaga
 async function getVaga(slug) {
@@ -312,7 +313,7 @@ export default async function VagaPage({ params }) {
 
             dateModified: vaga.updated_at || vaga.created_at,
             employmentType: "FULL_TIME",
-            directApply: true,
+            directApply: contato.href?.includes("wa.me"),
             url: `${baseUrl}/vaga/${resolvedParams.slug}`,
             hiringOrganization: {
               "@type": "Organization",
@@ -329,13 +330,17 @@ export default async function VagaPage({ params }) {
               address: {
                 "@type": "PostalAddress",
 
-                streetAddress: vaga.endereco || "",
 
                 addressLocality: cidade,
 
                 addressRegion: estado,
 
-                postalCode: vaga.cep || "",
+                ...(vaga.endereco && {
+                  streetAddress: vaga.endereco,
+                }),
+                ...(vaga.cep && {
+                  postalCode: vaga.cep,
+                }),
 
                 addressCountry: "BR",
               },

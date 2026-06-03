@@ -1,6 +1,9 @@
 import { supabase } from "@/lib/supabase";
 
-const baseUrl = "https://jauempregos.vercel.app";
+const baseUrl = (
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  "https://jauempregos.vercel.app"
+).replace(/\/$/, "");
 
 export default async function sitemap() {
   // Buscar vagas
