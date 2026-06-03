@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import JobCard from "@/components/JobCard";
 import AdsBanner from "@/components/ads/Adsense";
+export const dynamic = "force-dynamic";
 
 
 // Função auxiliar para agrupar as datas amigavelmente
