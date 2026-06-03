@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabase";
 import JobCard from "@/components/JobCard";
 import Adsense  from "@/components/ads/Adsense";
 import AdsBanner from "@/components/ads/Adsense";
-
+export const dynamic = "force-dynamic";
 // Função auxiliar com fuso horário de Brasília fixo
 function formatarGrupoData(dataString) {
   const dataVaga = new Date(dataString);
