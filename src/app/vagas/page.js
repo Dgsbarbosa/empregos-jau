@@ -2,7 +2,6 @@ import { supabase } from "@/lib/supabase";
 import JobCard from "@/components/JobCard";
 import AdsBanner from "@/components/ads/Adsense";
 
-export const revalidate = 600;
 
 // Função auxiliar para agrupar as datas amigavelmente
 function formatarGrupoData(dataString) {

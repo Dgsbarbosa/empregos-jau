@@ -7,7 +7,7 @@ import AdsBanner from "@/components/ads/Adsense";
 function formatarGrupoData(dataString) {
   const dataVaga = new Date(dataString);
   const hoje = new Date();
-  const ontem = new Date();
+    const ontem = new Date();
   ontem.setDate(hoje.getDate() - 1);
 
   // Força o fuso horário correto para evitar problemas no servidor Node.js
@@ -28,7 +28,13 @@ export default async function Home() {
     .select("*")
     .eq("ativo", true)
     .order("created_at", { ascending: false });
-
+    
+  console.log(
+  todasVagas?.slice(0, 10).map(v => ({
+    titulo: v.titulo,
+    created_at: v.created_at
+  }))
+);
   const vagasDestaque = todasVagas?.filter(vaga => vaga.destaque) || [];
   
   // Pega apenas as primeiras 10 vagas normais para a Home
