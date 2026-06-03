@@ -55,13 +55,13 @@ export async function generateMetadata({ params }) {
       locale: "pt_BR",
       type: "website",
       images: [
-      {
-        url: "/images/logo.png",
-        width: 1200,
-        height: 630,
-        alt: "Empregos Jaú",
-      },
-    ],
+        {
+          url: "/images/logo.png",
+          width: 1200,
+          height: 630,
+          alt: "Empregos Jaú",
+        },
+      ],
     },
 
     twitter: {
@@ -90,7 +90,7 @@ function formatContato(contato) {
     return {
       href: `mailto:${value}`,
       text: value,
-      label:"Envie um e-mail"
+      label: "Envie um e-mail"
     };
   }
 
@@ -108,7 +108,7 @@ function formatContato(contato) {
         ? cleanLink
         : `https://${cleanLink}`,
       text: cleanLink,
-      label:"Acesse a pagina da vaga"
+      label: "Acesse a pagina da vaga"
     };
   }
 
@@ -247,8 +247,8 @@ export default async function VagaPage({ params }) {
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:underline font-medium break-all"
                     >
-                    
-                      { contato.label }
+
+                      {contato.label}
                     </a>
                   ) : (
                     <p className="text-zinc-900 font-medium break-all">
@@ -304,7 +304,12 @@ export default async function VagaPage({ params }) {
 
             datePosted: vaga.created_at,
 
-            validThrough: vaga.expira_em,
+            validThrough:
+              vaga.expira_em ||
+              new Date(
+                Date.now() + 30 * 24 * 60 * 60 * 1000
+              ).toISOString(),
+
             dateModified: vaga.updated_at || vaga.created_at,
             employmentType: "FULL_TIME",
             directApply: true,
@@ -341,19 +346,17 @@ export default async function VagaPage({ params }) {
               name: "Brasil",
             },
 
-            baseSalary: {
-              "@type": "MonetaryAmount",
-
-              currency: "BRL",
-
-              value: {
-                "@type": "QuantitativeValue",
-
-                value: vaga.salario || 0,
-
-                unitText: "MONTH",
+            ...(vaga.salario && {
+              baseSalary: {
+                "@type": "MonetaryAmount",
+                currency: "BRL",
+                value: {
+                  "@type": "QuantitativeValue",
+                  value: vaga.salario,
+                  unitText: "MONTH",
+                },
               },
-            },
+            }),
           }),
         }}
       />
