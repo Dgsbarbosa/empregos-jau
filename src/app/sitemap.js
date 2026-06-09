@@ -7,7 +7,6 @@ const baseUrl = (
 
 export default async function sitemap() {
   // Buscar vagas
-  const { data } = await supabase
 const { data } = await supabase
   .from("vagas")
   .select("slug, created_at");
