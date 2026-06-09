@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import CallAction from "./_components/CallAction";
 import AdsBanner from "@/components/ads/Adsense";
 
+export const revalidate = 300;
 const baseUrl = (
   process.env.NEXT_PUBLIC_SITE_URL ||
   "https://jauempregos.vercel.app"
@@ -136,7 +137,7 @@ export default async function VagaPage({ params }) {
   const resolvedParams = await params;
 
   const vaga = await getVaga(resolvedParams.slug);
-  if (!vaga) {
+  if (!vaga || !vaga.ativo) {
     notFound();
   }
   const isDestaque = vaga.destaque;
@@ -305,14 +306,13 @@ export default async function VagaPage({ params }) {
 
             datePosted: vaga.created_at,
 
-            validThrough:
-              vaga.expira_em ||
-              new Date(
-                Date.now() + 30 * 24 * 60 * 60 * 1000
-              ).toISOString(),
+            validThrough: new Date(
+              new Date(vaga.created_at).getTime() +
+              30 * 24 * 60 * 60 * 1000
+            ).toISOString(),
 
             dateModified: vaga.updated_at || vaga.created_at,
-            employmentType: "FULL_TIME",
+            employmentType: "OTHER",
             directApply: contato.href?.includes("wa.me"),
             url: `${baseUrl}/vaga/${resolvedParams.slug}`,
             hiringOrganization: {

@@ -8,16 +8,15 @@ const baseUrl = (
 export default async function sitemap() {
   // Buscar vagas
   const { data } = await supabase
-    .from("vagas")
-    .select("slug, updated_at");
+const { data } = await supabase
+  .from("vagas")
+  .select("slug, created_at");
 
   // Vagas dinâmicas
   const vagas = (data || []).map((vaga) => ({
     url: `${baseUrl}/vaga/${vaga.slug}`,
 
-    lastModified: vaga.updated_at
-      ? new Date(vaga.updated_at)
-      : new Date(),
+    lastModified: new Date(vaga.created_at),
 
     changeFrequency: "daily",
 
