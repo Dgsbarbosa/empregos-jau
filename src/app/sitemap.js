@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase";
-
+export const dynamic = "force-dynamic";
 const baseUrl = (
   process.env.NEXT_PUBLIC_SITE_URL ||
   "https://jauempregos.vercel.app"
@@ -9,7 +9,7 @@ export default async function sitemap() {
   // Buscar vagas
 const { data } = await supabase
   .from("vagas")
-  .select("slug, created_at");
+  .select("slug, created_at");''
 
   // Vagas dinâmicas
   const vagas = (data || []).map((vaga) => ({
