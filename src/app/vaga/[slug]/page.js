@@ -312,7 +312,7 @@ export default async function VagaPage({ params }) {
             ).toISOString(),
 
             dateModified: vaga.updated_at || vaga.created_at,
-            employmentType: "OTHER",
+            employmentType: "FULL_TIME",
             directApply: contato.href?.includes("wa.me"),
             url: `${baseUrl}/vaga/${resolvedParams.slug}`,
             hiringOrganization: {
